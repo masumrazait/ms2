@@ -39,7 +39,9 @@
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
 html { scroll-behavior: smooth; overflow-x: hidden; }
+
 body {
   background: var(--black);
   color: var(--ivory);
@@ -128,314 +130,6 @@ body {
   pointer-events: none;
   z-index: 0;
   opacity: 0.7;
-}
-
-/* ═══════════════════════════════════════
-   ✨ ENVELOPE OVERLAY (NEW FEATURE)
-═══════════════════════════════════════ */
-#envelope-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 8000;
-  background: radial-gradient(ellipse at center, #1a0e05 0%, #0A0806 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-/* Twinkling stars behind envelope */
-#envelope-overlay::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 10% 15%, rgba(201,168,76,0.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 25% 40%, rgba(201,168,76,0.4) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 40% 20%, rgba(201,168,76,0.7) 0%, transparent 100%),
-    radial-gradient(1px 1px at 60% 10%, rgba(201,168,76,0.5) 0%, transparent 100%),
-    radial-gradient(1px 1px at 75% 30%, rgba(201,168,76,0.4) 0%, transparent 100%),
-    radial-gradient(2px 2px at 85% 15%, rgba(201,168,76,0.6) 0%, transparent 100%),
-    radial-gradient(1px 1px at 15% 70%, rgba(201,168,76,0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 90% 60%, rgba(201,168,76,0.5) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 50% 80%, rgba(201,168,76,0.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 90%, rgba(201,168,76,0.3) 0%, transparent 100%);
-  animation: starTwinkle 3s ease-in-out infinite alternate;
-}
-@keyframes starTwinkle {
-  0% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
-.envelope-tap-hint {
-  position: absolute;
-  bottom: clamp(2rem, 5vh, 4rem);
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-display);
-  font-size: clamp(0.5rem, 1.2vw, 0.7rem);
-  letter-spacing: 0.5em;
-  color: var(--gold);
-  opacity: 0;
-  text-align: center;
-  animation: hintPulse 2s ease 2s infinite;
-  white-space: nowrap;
-}
-@keyframes hintPulse {
-  0%,100% { opacity: 0.3; }
-  50% { opacity: 0.9; }
-}
-
-/* THE ENVELOPE */
-.envelope-scene {
-  position: relative;
-  width: clamp(280px, 80vw, 520px);
-  height: clamp(200px, 55vw, 370px);
-  animation: envFloat 3s ease-in-out infinite;
-  transform-style: preserve-3d;
-}
-@keyframes envFloat {
-  0%,100% { transform: translateY(0) rotate(-1deg); }
-  50% { transform: translateY(-14px) rotate(1deg); }
-}
-
-/* Envelope body */
-.env-body {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, #2a1a08 0%, #1a0e05 40%, #0d0804 100%);
-  border: 1px solid rgba(201,168,76,0.5);
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow:
-    0 0 60px rgba(201,168,76,0.2),
-    0 20px 60px rgba(0,0,0,0.8),
-    inset 0 0 40px rgba(201,168,76,0.04);
-}
-
-/* Gold border decoration */
-.env-body::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 2px;
-  pointer-events: none;
-}
-
-/* Envelope flap (top triangle) */
-.env-flap {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 55%;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
-  background: linear-gradient(180deg, #3a2010 0%, #251508 100%);
-  border-bottom: none;
-  transform-origin: top center;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 3;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
-.env-flap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  clip-path: polygon(2% 2%, 98% 2%, 50% 97%);
-  border: 1px solid rgba(201,168,76,0.3);
-}
-
-/* Flap open state */
-.env-flap.open {
-  transform: rotateX(-180deg);
-}
-
-/* Envelope bottom triangle */
-.env-bottom {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 55%;
-  clip-path: polygon(0 100%, 100% 100%, 50% 0%);
-  background: linear-gradient(0deg, #251508 0%, #1a0e05 100%);
-  z-index: 1;
-}
-
-/* Envelope side triangles */
-.env-left {
-  position: absolute;
-  top: 0; left: 0;
-  width: 52%;
-  height: 100%;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-  background: linear-gradient(90deg, #1a0e05 0%, #2a1a08 100%);
-  z-index: 2;
-}
-.env-right {
-  position: absolute;
-  top: 0; right: 0;
-  width: 52%;
-  height: 100%;
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
-  background: linear-gradient(270deg, #1a0e05 0%, #2a1a08 100%);
-  z-index: 2;
-}
-
-/* Arabic text on envelope */
-.env-bismillah {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 4;
-  text-align: center;
-  pointer-events: none;
-  width: 80%;
-}
-.env-bismillah-text {
-  font-family: var(--font-arabic);
-  font-size: clamp(1.2rem, 4vw, 2rem);
-  color: var(--gold-light);
-  text-shadow:
-    0 0 20px rgba(201,168,76,0.8),
-    0 0 40px rgba(201,168,76,0.4);
-  line-height: 1.6;
-  display: block;
-}
-.env-bismillah-sub {
-  font-family: var(--font-display);
-  font-size: clamp(0.45rem, 1vw, 0.6rem);
-  letter-spacing: 0.3em;
-  color: var(--gold);
-  opacity: 0.8;
-  margin-top: 0.5rem;
-  display: block;
-  text-transform: uppercase;
-}
-
-/* Wax seal */
-.env-seal {
-  position: absolute;
-  bottom: 18%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(44px, 10vw, 64px);
-  height: clamp(44px, 10vw, 64px);
-  background: radial-gradient(circle at 35% 35%, #d4a843, #8B6914);
-  border-radius: 50%;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow:
-    0 0 0 2px rgba(201,168,76,0.4),
-    0 0 20px rgba(201,168,76,0.3),
-    0 4px 12px rgba(0,0,0,0.6);
-  font-family: var(--font-arabic);
-  font-size: clamp(0.9rem, 2vw, 1.3rem);
-  color: #1a0e05;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.env-seal:hover {
-  transform: translateX(-50%) scale(1.1);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.6), 0 0 30px rgba(201,168,76,0.5), 0 4px 16px rgba(0,0,0,0.7);
-}
-
-/* Invitation card peeking out */
-.env-card-peek {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(0%);
-  width: 75%;
-  height: 60%;
-  background: linear-gradient(160deg, rgba(245,228,168,0.12), rgba(201,168,76,0.06));
-  border: 1px solid rgba(201,168,76,0.4);
-  border-radius: 2px 2px 0 0;
-  z-index: 0;
-  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.env-card-peek.rise {
-  transform: translateX(-50%) translateY(-60%);
-}
-.env-card-peek-text {
-  font-family: var(--font-arabic);
-  font-size: clamp(0.7rem, 2vw, 1rem);
-  color: var(--gold-pale);
-  text-align: center;
-  opacity: 0.8;
-  padding: 0.5rem;
-}
-
-/* ═══════════════════════════════════════
-   FLOWER BURST ANIMATION
-═══════════════════════════════════════ */
-.flower-burst-container {
-  position: fixed;
-  inset: 0;
-  z-index: 7999;
-  pointer-events: none;
-  display: none;
-}
-.flower-burst-container.active { display: block; }
-
-.flower-petal {
-  position: absolute;
-  width: clamp(16px, 3vw, 28px);
-  height: clamp(22px, 4vw, 38px);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  opacity: 0;
-  transform-origin: bottom center;
-}
-
-/* Door panels */
-.door-left, .door-right {
-  position: fixed;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  z-index: 7500;
-  display: none;
-  overflow: hidden;
-}
-.door-left { left: 0; transform-origin: left center; }
-.door-right { right: 0; transform-origin: right center; }
-.door-left.active, .door-right.active { display: block; }
-
-.door-panel {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #1a0e05 0%, #0d0804 100%);
-  border-right: 1px solid rgba(201,168,76,0.4);
-  position: relative;
-  overflow: hidden;
-}
-.door-right .door-panel {
-  border-right: none;
-  border-left: 1px solid rgba(201,168,76,0.4);
-}
-
-.door-panel::before {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(201,168,76,0.15);
-}
-
-.door-arabic-decor {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-arabic);
-  font-size: clamp(3rem, 10vw, 8rem);
-  color: rgba(201,168,76,0.08);
-  line-height: 1;
-  white-space: nowrap;
 }
 
 /* ═══════════════════════════════════════
@@ -831,74 +525,6 @@ section {
   margin-top: 12px;
 }
 
-/* ═══════════════════════════════════════
-   ✨ SCRATCH DATE (NEW FEATURE)
-═══════════════════════════════════════ */
-.scratch-date-section {
-  text-align: center;
-  margin: 2rem auto 3rem;
-  max-width: 480px;
-}
-.scratch-hint {
-  font-family: var(--font-display);
-  font-size: clamp(0.5rem, 1.2vw, 0.65rem);
-  letter-spacing: 0.4em;
-  color: rgba(201,168,76,0.6);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.scratch-hint::before, .scratch-hint::after {
-  content: '✦';
-  font-size: 0.6rem;
-  opacity: 0.5;
-}
-
-.scratch-container {
-  position: relative;
-  display: inline-block;
-  border: 1px solid rgba(201,168,76,0.3);
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: crosshair;
-}
-
-.scratch-date-reveal {
-  font-family: var(--font-serif);
-  font-size: clamp(1.4rem, 4vw, 2.2rem);
-  font-weight: 700;
-  color: var(--gold-light);
-  text-shadow: 0 0 20px rgba(201,168,76,0.6), 0 0 40px rgba(201,168,76,0.3);
-  letter-spacing: 0.08em;
-  padding: 1.2rem 2.5rem;
-  background: rgba(201,168,76,0.06);
-  display: block;
-  line-height: 1.4;
-}
-
-.scratch-canvas {
-  position: absolute;
-  inset: 0;
-  border-radius: 4px;
-  touch-action: none;
-}
-
-.scratch-revealed-msg {
-  font-family: var(--font-display);
-  font-size: clamp(0.45rem, 1vw, 0.58rem);
-  letter-spacing: 0.35em;
-  color: var(--gold);
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  margin-top: 0.8rem;
-  text-transform: uppercase;
-  display: block;
-}
-.scratch-revealed-msg.visible { opacity: 1; }
-
 /* Timeline */
 .timeline {
   max-width: 680px;
@@ -1178,12 +804,14 @@ footer {
   .timeline-item { flex-direction: column !important; padding: 0 0 0 50px !important; }
   .timeline-dot { left: 20px; }
   .timeline-content { text-align: left; }
+
   .couple-wrap { gap: 0.8rem; }
   .couple-sep { font-size: 2rem; }
+
   #cursor, #cursor-ring { display: none; }
   body { cursor: auto; }
+
   .crescent { top: 5%; right: 5%; }
-  .envelope-scene { width: clamp(260px, 88vw, 360px); height: clamp(180px, 60vw, 260px); }
 }
 
 @media (max-width: 480px) {
@@ -1192,7 +820,6 @@ footer {
   .corner-ornament { width: 24px; height: 24px; }
   .members-grid { grid-template-columns: repeat(2, 1fr); }
   .family-members-wrap { padding: 2rem 1rem; }
-  .scratch-date-reveal { font-size: 1.1rem; padding: 1rem 1.5rem; }
 }
 
 /* Glassmorphism glow rings */
@@ -1229,49 +856,6 @@ footer {
   <div class="loader-text">💕 MASUM WEDS SIMMI 💕</div>
 </div>
 
-<!-- ══════════ ENVELOPE OVERLAY (NEW) ══════════ -->
-<div id="envelope-overlay">
-  <div class="envelope-scene" id="envelope-scene">
-    <!-- Envelope body -->
-    <div class="env-body">
-      <!-- Side triangles -->
-      <div class="env-left"></div>
-      <div class="env-right"></div>
-      <!-- Bottom triangle -->
-      <div class="env-bottom"></div>
-      <!-- Flap -->
-      <div class="env-flap" id="env-flap"></div>
-      <!-- Card peeking -->
-      <div class="env-card-peek" id="env-card-peek">
-        <div class="env-card-peek-text">دعوةُ النِّكَاح<br><span style="font-family:var(--font-display);font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);opacity:0.7;">WEDDING INVITATION</span></div>
-      </div>
-      <!-- Seal -->
-      <div class="env-seal" id="env-seal">☪</div>
-    </div>
-    <!-- Arabic text on envelope front -->
-    <div class="env-bismillah">
-      <span class="env-bismillah-text">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</span>
-      <span class="env-bismillah-sub">Tap to open your invitation</span>
-    </div>
-  </div>
-  <div class="envelope-tap-hint">✦ TAP TO OPEN ✦</div>
-</div>
-
-<!-- ══════════ FLOWER BURST ══════════ -->
-<div class="flower-burst-container" id="flower-burst"></div>
-
-<!-- ══════════ DOOR PANELS ══════════ -->
-<div class="door-left" id="door-left">
-  <div class="door-panel">
-    <div class="door-arabic-decor">بِسْمِ</div>
-  </div>
-</div>
-<div class="door-right" id="door-right">
-  <div class="door-panel">
-    <div class="door-arabic-decor">ٱللَّٰهِ</div>
-  </div>
-</div>
-
 <!-- ══════════ HERO ══════════ -->
 <section id="hero">
   <div class="hero-glow"></div>
@@ -1290,20 +874,27 @@ footer {
 
   <!-- Mosque silhouette SVG -->
   <svg class="mosque-silhouette" viewBox="0 0 1400 400" fill="#C9A84C" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main dome -->
     <ellipse cx="700" cy="220" rx="120" ry="100"/>
     <rect x="580" y="220" width="240" height="180"/>
+    <!-- Main minarets -->
     <rect x="520" y="100" width="30" height="300"/>
     <ellipse cx="535" cy="100" rx="18" ry="30"/>
     <rect x="850" y="100" width="30" height="300"/>
     <ellipse cx="865" cy="100" rx="18" ry="30"/>
+    <!-- Side domes -->
     <ellipse cx="535" cy="220" rx="45" ry="38"/>
     <ellipse cx="865" cy="220" rx="45" ry="38"/>
+    <!-- Small minarets -->
     <rect x="380" y="180" width="20" height="220"/>
     <ellipse cx="390" cy="180" rx="12" ry="22"/>
     <rect x="1000" y="180" width="20" height="220"/>
     <ellipse cx="1010" cy="180" rx="12" ry="22"/>
+    <!-- Ground -->
     <rect x="0" y="390" width="1400" height="10"/>
+    <!-- Arches -->
     <path d="M620 400 Q620 280 700 280 Q780 280 780 400Z"/>
+    <!-- Windows -->
     <path d="M660 320 Q660 295 700 295 Q740 295 740 320V340H660Z" fill="rgba(0,0,0,0.4)"/>
   </svg>
 
@@ -1330,7 +921,7 @@ footer {
       </div>
       <div class="couple-sep" id="couple-amp">♥</div>
       <div class="bride-groom-card" id="bride-card">
-        <div class="name-arabic">سِمّی خاتون</div>
+      <div class="name-arabic">سِمّی خاتون</div>
         <div class="name-english">Simmi Khatoon</div>
       </div>
     </div>
@@ -1358,6 +949,7 @@ footer {
   <div class="section-heading-en reveal">Meet The Families</div>
 
   <div class="family-grid">
+    <!-- Groom Card -->
     <div class="family-card reveal">
       <span class="family-tag">Groom</span>
       <span class="family-ornament">☪</span>
@@ -1372,6 +964,8 @@ footer {
         <span style="opacity:0.7;font-size:0.85rem">Basantpur Bangla, Amnour, Saran</span>
       </div>
     </div>
+
+    <!-- Bride Card -->
     <div class="family-card reveal">
       <span class="family-tag">Bride</span>
       <span class="family-ornament">✿</span>
@@ -1402,16 +996,7 @@ footer {
 <section id="events">
   <div class="section-label reveal">Mark Your Calendar</div>
   <div class="section-heading reveal">✨ Save The Date ✨</div>
-
-  <!-- ✨ SCRATCH DATE REVEAL (NEW) -->
-  <div class="scratch-date-section reveal">
-    <div class="scratch-hint">Scratch to reveal the wedding date</div>
-    <div class="scratch-container" id="scratch-container">
-      <span class="scratch-date-reveal">29th October 2026 — Saran, Bihar</span>
-      <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
-    </div>
-    <span class="scratch-revealed-msg" id="scratch-revealed-msg">✦ Alhamdulillah · Mark the date ✦</span>
-  </div>
+  <div class="section-heading-en reveal" style="font-weight:700;color:var(--gold-light);font-size:clamp(1.2rem,3vw,1.8rem);text-shadow:0 0 16px rgba(201,168,76,0.5);">29th October 2026 — Saran, Bihar</div>
 
   <!-- Countdown -->
   <div class="countdown-wrap reveal" id="countdown-wrap">
@@ -1662,183 +1247,12 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-/* ═══════════════════════════════════════
-   ✨ ENVELOPE ANIMATION (NEW)
-═══════════════════════════════════════ */
-let envelopeOpened = false;
-
-function spawnFlowers(cx, cy){
-  const burst = document.getElementById('flower-burst');
-  burst.classList.add('active');
-  burst.innerHTML = '';
-
-  const petalColors = [
-    '#E8A0BF','#FFD700','#C9A84C','#FF9EAA',
-    '#FFF0A0','#E8C96E','#FFB7C5','#F5E4A8',
-    '#C8E6C9','#FFC0CB','#FFFDE7','#F8BBD0'
-  ];
-  const petalShapes = [
-    '50% 50% 50% 50% / 60% 60% 40% 40%',
-    '50% 50% 50% 50% / 40% 40% 60% 60%',
-    '60% 40% 60% 40% / 50% 60% 40% 50%',
-    '40% 60% 40% 60% / 60% 40% 60% 40%',
-    '50% 50% 50% 50% / 70% 30% 70% 30%',
-  ];
-  const count = window.innerWidth < 600 ? 40 : 70;
-
-  for(let i=0;i<count;i++){
-    const petal = document.createElement('div');
-    petal.className = 'flower-petal';
-    const color = petalColors[Math.floor(Math.random()*petalColors.length)];
-    const shape = petalShapes[Math.floor(Math.random()*petalShapes.length)];
-    const size = Math.random()*20+10;
-    petal.style.cssText = `
-      left:${cx}px; top:${cy}px;
-      width:${size}px; height:${size*1.4}px;
-      background:${color};
-      border-radius:${shape};
-      box-shadow:0 0 ${size/2}px ${color}80;
-    `;
-    burst.appendChild(petal);
-
-    const angle = (Math.random()*360) * Math.PI/180;
-    const dist = Math.random()*window.innerWidth*0.5+100;
-    const tx = Math.cos(angle)*dist;
-    const ty = Math.sin(angle)*dist;
-    const rotation = Math.random()*720-360;
-    const duration = Math.random()*1.2+0.8;
-    const delay = Math.random()*0.3;
-
-    gsap.to(petal, {
-      x: tx, y: ty,
-      rotation: rotation,
-      opacity: 0,
-      scale: Math.random()*1.5+0.5,
-      duration: duration,
-      delay: delay,
-      ease: 'power2.out',
-    });
-  }
-
-  // Also spawn some floating rose symbols
-  for(let i=0;i<15;i++){
-    const rose = document.createElement('div');
-    rose.style.cssText = `
-      position:absolute;
-      left:${cx}px; top:${cy}px;
-      font-size:${Math.random()*20+14}px;
-      opacity:0;
-      pointer-events:none;
-    `;
-    rose.textContent = ['🌸','🌺','✿','❀','🌷','💐','🌹'][Math.floor(Math.random()*7)];
-    burst.appendChild(rose);
-    const angle = (Math.random()*360) * Math.PI/180;
-    const dist = Math.random()*300+80;
-    gsap.to(rose, {
-      x: Math.cos(angle)*dist,
-      y: Math.sin(angle)*dist - 80,
-      opacity: [0, 1, 0],
-      scale: [0.5, 1.5, 0.8],
-      duration: Math.random()*1.5+1,
-      delay: Math.random()*0.5,
-      ease: 'power1.out',
-    });
-  }
-
-  setTimeout(()=>{
-    burst.classList.remove('active');
-    burst.innerHTML = '';
-  }, 3000);
-}
-
-function openEnvelope(){
-  if(envelopeOpened) return;
-  envelopeOpened = true;
-
-  const overlay = document.getElementById('envelope-overlay');
-  const flap = document.getElementById('env-flap');
-  const cardPeek = document.getElementById('env-card-peek');
-  const scene = document.getElementById('envelope-scene');
-  const doorL = document.getElementById('door-left');
-  const doorR = document.getElementById('door-right');
-
-  // Stop envelope floating animation
-  scene.style.animation = 'none';
-
-  // Step 1: Open the flap
-  flap.classList.add('open');
-
-  // Step 2: Card rises after flap opens
-  setTimeout(()=>{
-    cardPeek.classList.add('rise');
-  }, 600);
-
-  // Step 3: Flower burst from center
-  const rect = overlay.getBoundingClientRect();
-  const cx = rect.width/2;
-  const cy = rect.height/2;
-
-  setTimeout(()=>{
-    spawnFlowers(cx, cy);
-  }, 900);
-
-  // Step 4: Door panels slide open
-  setTimeout(()=>{
-    doorL.style.display = 'block';
-    doorR.style.display = 'block';
-
-    // Position doors on top of the fading overlay
-    gsap.set('#door-left', { xPercent: 0 });
-    gsap.set('#door-right', { xPercent: 0 });
-
-    // Hide envelope overlay
-    gsap.to(overlay, {
-      opacity: 0,
-      duration: 0.5,
-      onComplete: ()=>{ overlay.style.display='none'; }
-    });
-
-    // Animate doors opening outward
-    gsap.fromTo('#door-left',
-      { xPercent: 0, opacity: 1 },
-      { xPercent: -100, duration: 1.4, ease: 'power3.inOut', delay: 0.1 }
-    );
-    gsap.fromTo('#door-right',
-      { xPercent: 0, opacity: 1 },
-      { xPercent: 100, duration: 1.4, ease: 'power3.inOut', delay: 0.1,
-        onComplete: ()=>{
-          doorL.style.display='none';
-          doorR.style.display='none';
-          // Finally init the main page
-          initAnimations();
-        }
-      }
-    );
-  }, 1600);
-}
-
-// Tap/click to open envelope
-document.getElementById('envelope-overlay').addEventListener('click', openEnvelope);
-document.getElementById('envelope-overlay').addEventListener('touchend', (e)=>{
-  e.preventDefault();
-  openEnvelope();
-}, { passive: false });
-
 /* ─── LOADER ─── */
 window.addEventListener('load', ()=>{
   setTimeout(()=>{
     gsap.to('#loader', {
       opacity: 0, duration: 1.2, ease: 'power2.inOut',
-      onComplete: ()=>{
-        document.getElementById('loader').style.display='none';
-        // Show envelope overlay — fade it in
-        gsap.fromTo('#envelope-overlay',
-          { opacity: 0 },
-          { opacity: 1, duration: 1 }
-        );
-        // Show tap hint after a moment
-        document.querySelector('.envelope-tap-hint').style.opacity = '0';
-      }
+      onComplete: ()=>{ document.getElementById('loader').style.display='none'; initAnimations(); }
     });
   }, 2400);
 });
@@ -1907,122 +1321,12 @@ function initAnimations(){
       }
     );
   });
-
-  /* Init scratch card */
-  initScratchCard();
-}
-
-/* ═══════════════════════════════════════
-   ✨ SCRATCH DATE REVEAL (NEW)
-═══════════════════════════════════════ */
-function initScratchCard(){
-  const container = document.getElementById('scratch-container');
-  const canvas = document.getElementById('scratch-canvas');
-  const revealMsg = document.getElementById('scratch-revealed-msg');
-
-  // Wait for container to be visible
-  requestAnimationFrame(()=>{
-    const rect = container.getBoundingClientRect();
-    const w = rect.width || container.offsetWidth;
-    const h = rect.height || container.offsetHeight;
-    canvas.width = w;
-    canvas.height = h;
-
-    const ctx = canvas.getContext('2d');
-
-    // Draw scratch layer - gold foil texture
-    const grad = ctx.createLinearGradient(0, 0, w, h);
-    grad.addColorStop(0, '#8B6914');
-    grad.addColorStop(0.3, '#C9A84C');
-    grad.addColorStop(0.5, '#E8C96E');
-    grad.addColorStop(0.7, '#C9A84C');
-    grad.addColorStop(1, '#8B6914');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, w, h);
-
-    // Arabic pattern overlay
-    ctx.fillStyle = 'rgba(0,0,0,0.15)';
-    for(let i=0;i<8;i++){
-      for(let j=0;j<4;j++){
-        ctx.font = `${Math.random()*8+8}px serif`;
-        ctx.fillText('✦', i*(w/8)+Math.random()*5, j*(h/4)+Math.random()*5+12);
-      }
-    }
-
-    // Text on scratch layer
-    ctx.fillStyle = 'rgba(17,13,8,0.8)';
-    ctx.font = `bold ${Math.min(w/18, 16)}px 'Cinzel Decorative', serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('✦ SCRATCH HERE ✦', w/2, h/2 - 10);
-    ctx.font = `${Math.min(w/25, 11)}px 'Cormorant Garamond', serif`;
-    ctx.fillStyle = 'rgba(17,13,8,0.6)';
-    ctx.fillText('کھرچیں تاریخ جاننے کے لیے', w/2, h/2 + 12);
-
-    ctx.globalCompositeOperation = 'destination-out';
-
-    let isDrawing = false;
-    let totalPixels = w * h;
-    let scratchedPercent = 0;
-    let revealed = false;
-
-    function scratch(x, y, r){
-      ctx.beginPath();
-      ctx.arc(x, y, r || (window.innerWidth < 600 ? 28 : 22), 0, Math.PI*2);
-      ctx.fill();
-      checkReveal();
-    }
-
-    function checkReveal(){
-      if(revealed) return;
-      // Sample pixels to check % scratched
-      const imgData = ctx.getImageData(0, 0, w, h);
-      let cleared = 0;
-      const step = 4 * 8; // sample every 8th pixel for perf
-      for(let i=3; i<imgData.data.length; i+=step){
-        if(imgData.data[i] === 0) cleared++;
-      }
-      const pct = (cleared / (imgData.data.length / (4*8))) * 100;
-      if(pct > 55){
-        revealed = true;
-        revealComplete();
-      }
-    }
-
-    function revealComplete(){
-      gsap.to(canvas, { opacity: 0, duration: 1.2, ease: 'power2.out' });
-      revealMsg.classList.add('visible');
-      // Tiny flower burst on reveal
-      const rect2 = container.getBoundingClientRect();
-      spawnFlowers(rect2.left + rect2.width/2, rect2.top + rect2.height/2);
-    }
-
-    function getPos(e, elem){
-      const r = elem.getBoundingClientRect();
-      if(e.touches){
-        return { x: e.touches[0].clientX - r.left, y: e.touches[0].clientY - r.top };
-      }
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
-    }
-
-    canvas.addEventListener('mousedown', (e)=>{ isDrawing=true; const p=getPos(e,canvas); scratch(p.x, p.y, 30); });
-    canvas.addEventListener('mousemove', (e)=>{ if(!isDrawing) return; const p=getPos(e,canvas); scratch(p.x, p.y, 26); });
-    canvas.addEventListener('mouseup', ()=>{ isDrawing=false; });
-    canvas.addEventListener('mouseleave', ()=>{ isDrawing=false; });
-
-    canvas.addEventListener('touchstart', (e)=>{ e.preventDefault(); isDrawing=true; const p=getPos(e,canvas); scratch(p.x,p.y,36); }, { passive:false });
-    canvas.addEventListener('touchmove', (e)=>{ e.preventDefault(); if(!isDrawing) return; const p=getPos(e,canvas); scratch(p.x,p.y,36); }, { passive:false });
-    canvas.addEventListener('touchend', ()=>{ isDrawing=false; });
-  });
 }
 
 /* Fallback if load already fired */
 if(document.readyState==='complete'){
   setTimeout(()=>{
-    gsap.to('#loader',{opacity:0,duration:1.2,onComplete:()=>{
-      document.getElementById('loader').style.display='none';
-      gsap.fromTo('#envelope-overlay',{opacity:0},{opacity:1,duration:1});
-    }});
+    gsap.to('#loader',{opacity:0,duration:1.2,onComplete:()=>{document.getElementById('loader').style.display='none';initAnimations();}});
   },800);
 }
 </script>
