@@ -462,280 +462,6 @@ body::before {
 }
 
 /* ═══════════════════════════════════════
-   RIBBON SYSTEM
-═══════════════════════════════════════ */
-#ribbon-wrap {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ribbon-h {
-  position: absolute;
-  left: 0; right: 0;
-  top: 50%;
-  height: 28px;
-  margin-top: -14px;
-  background: linear-gradient(180deg, #c0392b 0%, #e74c3c 45%, #c0392b 100%);
-  box-shadow: 0 0 18px rgba(231,76,60,0.7), 0 2px 8px rgba(0,0,0,0.5);
-  transform-origin: center;
-}
-.ribbon-v {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 50%;
-  width: 28px;
-  margin-left: -14px;
-  background: linear-gradient(90deg, #c0392b 0%, #e74c3c 45%, #c0392b 100%);
-  box-shadow: 0 0 18px rgba(231,76,60,0.7), 2px 0 8px rgba(0,0,0,0.5);
-  transform-origin: center;
-}
-/* Ribbon gold edge lines */
-.ribbon-h::before, .ribbon-h::after,
-.ribbon-v::before, .ribbon-v::after {
-  content: '';
-  position: absolute;
-  background: rgba(212,175,55,0.6);
-}
-.ribbon-h::before { top: 2px; left: 0; right: 0; height: 1px; }
-.ribbon-h::after  { bottom: 2px; left: 0; right: 0; height: 1px; }
-.ribbon-v::before { left: 2px; top: 0; bottom: 0; width: 1px; }
-.ribbon-v::after  { right: 2px; top: 0; bottom: 0; width: 1px; }
-
-/* Bow knot */
-#ribbon-bow {
-  position: absolute;
-  z-index: 11;
-  width: 120px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-.bow-loop-left, .bow-loop-right {
-  position: absolute;
-  width: 52px; height: 36px;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: radial-gradient(ellipse at 35% 40%, #e74c3c, #9b1c1c);
-  box-shadow: 0 0 14px rgba(231,76,60,0.8);
-  border: 1px solid rgba(212,175,55,0.5);
-}
-.bow-loop-left  { left: 2px; transform: rotate(-30deg); transform-origin: right center; }
-.bow-loop-right { right: 2px; transform: rotate(30deg); transform-origin: left center; }
-.bow-knot {
-  width: 26px; height: 26px;
-  background: radial-gradient(circle at 40% 40%, #f0a500, #c0392b);
-  border-radius: 50%;
-  box-shadow: 0 0 16px rgba(212,175,55,0.9), 0 0 6px rgba(231,76,60,0.7);
-  border: 1px solid rgba(255,240,160,0.6);
-  z-index: 12;
-  position: relative;
-}
-.bow-tail-left, .bow-tail-right {
-  position: absolute;
-  bottom: -28px;
-  width: 18px; height: 36px;
-  background: linear-gradient(180deg, #c0392b, #9b1c1c);
-  border-radius: 0 0 40% 40%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-}
-.bow-tail-left  { left: 36px; transform: rotate(-12deg); }
-.bow-tail-right { right: 36px; transform: rotate(12deg); }
-
-/* ═══════════════════════════════════════
-   GOLDEN LIGHT BURST
-═══════════════════════════════════════ */
-#golden-burst {
-  position: fixed;
-  inset: 0;
-  z-index: 7800;
-  pointer-events: none;
-  display: none;
-  overflow: hidden;
-}
-#golden-burst.active { display: block; }
-#golden-burst-core {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  width: 0; height: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fffde7 0%, #ffe082 20%, #f5c842 45%, #d4af37 70%, transparent 100%);
-  box-shadow:
-    0 0 60px 30px rgba(255,253,231,0.9),
-    0 0 120px 60px rgba(245,200,66,0.7),
-    0 0 200px 100px rgba(212,175,55,0.4);
-}
-.burst-ray {
-  position: absolute;
-  left: 50%; top: 50%;
-  height: 3px;
-  transform-origin: left center;
-  background: linear-gradient(90deg, rgba(255,253,231,0.9), transparent);
-  border-radius: 2px;
-}
-
-/* ═══════════════════════════════════════
-   SPARKLE PARTICLES (door opening)
-═══════════════════════════════════════ */
-#sparkle-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 7600;
-  pointer-events: none;
-  display: none;
-  overflow: hidden;
-}
-#sparkle-layer.active { display: block; }
-.sparkle-particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-/* ═══════════════════════════════════════
-   MOSQUE COURTYARD SCENE (camera travel)
-═══════════════════════════════════════ */
-#mosque-travel {
-  position: fixed;
-  inset: 0;
-  z-index: 7400;
-  pointer-events: none;
-  display: none;
-  overflow: hidden;
-  background: linear-gradient(180deg, #05161e 0%, #071e2a 40%, #0a2a1c 100%);
-}
-#mosque-travel.active { display: block; }
-
-/* Night sky in travel */
-.travel-sky {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 20%, #0a2236 0%, #05161e 60%);
-}
-/* Stars in the sky */
-.travel-star {
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  animation: travelStarTwinkle 2s ease-in-out infinite alternate;
-}
-@keyframes travelStarTwinkle {
-  from { opacity: 0.4; transform: scale(0.8); }
-  to   { opacity: 1;   transform: scale(1.2); }
-}
-/* Full moon */
-.travel-moon {
-  position: absolute;
-  top: 8%; left: 50%;
-  transform: translateX(-50%);
-  width: clamp(70px, 10vw, 130px);
-  height: clamp(70px, 10vw, 130px);
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 38%, #fffde7, #ffe082 40%, #f5c842 80%, #d4af37);
-  box-shadow:
-    0 0 40px 20px rgba(245,200,66,0.5),
-    0 0 80px 40px rgba(212,175,55,0.25),
-    0 0 150px 80px rgba(212,175,55,0.08);
-}
-.travel-moon::after {
-  content: '';
-  position: absolute;
-  inset: 8%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,253,231,0.6), transparent 60%);
-}
-/* Mosque arch gateway */
-.travel-arch {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(200px, 55vw, 480px);
-  height: clamp(260px, 70vh, 560px);
-}
-/* Arch SVG courtyard */
-.travel-courtyard-bg {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(16,50,35,0.6) 0%, rgba(10,30,20,0.9) 100%);
-}
-/* Ground tiles */
-.travel-ground {
-  position: absolute;
-  bottom: 0; left: -50%; right: -50%;
-  height: 30%;
-  background:
-    repeating-linear-gradient(90deg, rgba(212,175,55,0.08) 0px, rgba(212,175,55,0.08) 1px, transparent 1px, transparent 60px),
-    repeating-linear-gradient(0deg, rgba(212,175,55,0.08) 0px, rgba(212,175,55,0.08) 1px, transparent 1px, transparent 60px),
-    linear-gradient(180deg, rgba(10,40,28,0.8) 0%, rgba(5,20,14,1) 100%);
-}
-/* Light spilling from open doors */
-.travel-light-spill {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 300px;
-  background: radial-gradient(ellipse at 50% 100%, rgba(245,200,66,0.35) 0%, rgba(212,175,55,0.12) 40%, transparent 75%);
-  pointer-events: none;
-}
-/* Fountain in courtyard */
-.travel-fountain {
-  position: absolute;
-  bottom: 28%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(40px, 8vw, 80px);
-  opacity: 0;
-}
-/* Golden mist overlay for camera travel */
-#travel-mist {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at center, rgba(212,175,55,0.18) 0%, transparent 60%);
-  animation: mistPulse 3s ease-in-out infinite;
-}
-@keyframes mistPulse {
-  0%,100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Enhanced door panels for the opening reveal */
-/* Ornate door details */
-.door-panel-inner {
-  position: absolute;
-  inset: 16px;
-  border: 1px solid rgba(212,175,55,0.2);
-  pointer-events: none;
-}
-.door-arch-top {
-  position: absolute;
-  top: 8%; left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  aspect-ratio: 1;
-  border: 1px solid rgba(212,175,55,0.25);
-  border-radius: 50% 50% 0 0;
-}
-/* Gold light seeping from door edge on open */
-.door-light-edge {
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 6px;
-  background: linear-gradient(90deg, rgba(245,200,66,0.0), rgba(245,200,66,0.8));
-  opacity: 0;
-}
-.door-left .door-light-edge  { right: 0; }
-.door-right .door-light-edge { left: 0; background: linear-gradient(270deg, rgba(245,200,66,0.0), rgba(245,200,66,0.8)); }
-
-/* ═══════════════════════════════════════
    HERO SECTION
 ═══════════════════════════════════════ */
 #hero {
@@ -1503,11 +1229,6 @@ footer {
   body { cursor: auto; }
   .crescent { top: 5%; right: 5%; }
   .envelope-scene { width: clamp(260px, 88vw, 360px); height: clamp(180px, 60vw, 260px); }
-  #ribbon-bow { width: 80px; height: 56px; }
-  .bow-loop-left, .bow-loop-right { width: 34px; height: 24px; }
-  .bow-knot { width: 18px; height: 18px; }
-  .travel-arch { width: 90vw; }
-  .travel-moon { width: 60px; height: 60px; top: 5%; }
 }
 
 @media (max-width: 480px) {
@@ -1614,106 +1335,16 @@ footer {
 <!-- ══════════ FLOWER BURST ══════════ -->
 <div class="flower-burst-container" id="flower-burst"></div>
 
-<!-- ══════════ DOOR PANELS (Enhanced) ══════════ -->
+<!-- ══════════ DOOR PANELS ══════════ -->
 <div class="door-left" id="door-left">
   <div class="door-panel">
-    <div class="door-panel-inner"></div>
-    <div class="door-arch-top"></div>
     <div class="door-arabic-decor">بِسْمِ</div>
-    <!-- Ribbon on door left -->
-    <div id="ribbon-wrap-left" style="position:absolute;inset:0;pointer-events:none;z-index:10;">
-      <div class="ribbon-h" id="ribbon-h-left"></div>
-      <div class="ribbon-v" id="ribbon-v-left"></div>
-      <div class="door-light-edge"></div>
-    </div>
   </div>
 </div>
 <div class="door-right" id="door-right">
   <div class="door-panel">
-    <div class="door-panel-inner"></div>
-    <div class="door-arch-top"></div>
     <div class="door-arabic-decor">ٱللَّٰهِ</div>
-    <div id="ribbon-wrap-right" style="position:absolute;inset:0;pointer-events:none;z-index:10;">
-      <div class="ribbon-h" id="ribbon-h-right"></div>
-      <div class="ribbon-v" id="ribbon-v-right"></div>
-      <div class="door-light-edge"></div>
-    </div>
   </div>
-</div>
-
-<!-- Shared Bow knot (center of both doors) -->
-<div id="ribbon-bow" style="position:fixed;z-index:7600;top:50%;left:50%;transform:translate(-50%,-50%);display:none;">
-  <div class="bow-loop-left"></div>
-  <div class="bow-loop-right"></div>
-  <div class="bow-knot"></div>
-  <div class="bow-tail-left"></div>
-  <div class="bow-tail-right"></div>
-</div>
-
-<!-- ══════════ GOLDEN LIGHT BURST ══════════ -->
-<div id="golden-burst">
-  <div id="golden-burst-core"></div>
-</div>
-
-<!-- ══════════ SPARKLE LAYER ══════════ -->
-<div id="sparkle-layer"></div>
-
-<!-- ══════════ MOSQUE TRAVEL SCENE ══════════ -->
-<div id="mosque-travel">
-  <div class="travel-sky"></div>
-  <div class="travel-moon"></div>
-  <div class="travel-courtyard-bg"></div>
-  <div class="travel-ground"></div>
-  <div class="travel-light-spill"></div>
-  <!-- Mosque arch SVG -->
-  <div class="travel-arch">
-    <svg viewBox="0 0 480 560" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-      <!-- Main arch -->
-      <path d="M80 560 L80 280 Q80 100 240 80 Q400 100 400 280 L400 560Z"
-        fill="none" stroke="rgba(212,175,55,0.55)" stroke-width="2.5"/>
-      <!-- Inner arch -->
-      <path d="M110 560 L110 295 Q110 130 240 115 Q370 130 370 295 L370 560Z"
-        fill="rgba(5,20,14,0.7)" stroke="rgba(212,175,55,0.3)" stroke-width="1.5"/>
-      <!-- Arch Muqarnas top detail -->
-      <path d="M160 130 Q180 110 200 120 Q220 100 240 110 Q260 100 280 120 Q300 110 320 130"
-        fill="none" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
-      <!-- Arch decorative panels -->
-      <rect x="130" y="200" width="220" height="1" fill="rgba(212,175,55,0.3)"/>
-      <rect x="130" y="280" width="220" height="1" fill="rgba(212,175,55,0.3)"/>
-      <rect x="130" y="360" width="220" height="1" fill="rgba(212,175,55,0.3)"/>
-      <!-- Left column -->
-      <rect x="80" y="280" width="30" height="280" fill="linear-gradient"/>
-      <path d="M80 280 L110 280 L110 560 L80 560Z" fill="rgba(26,60,40,0.8)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
-      <!-- Right column -->
-      <path d="M370 280 L400 280 L400 560 L370 560Z" fill="rgba(26,60,40,0.8)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
-      <!-- Minaret left -->
-      <rect x="20" y="100" width="22" height="460" fill="rgba(16,46,32,0.9)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
-      <ellipse cx="31" cy="100" rx="14" ry="28" fill="rgba(16,46,32,0.9)" stroke="rgba(212,175,55,0.35)" stroke-width="1"/>
-      <line x1="31" y1="72" x2="31" y2="55" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
-      <polygon points="31,48 34,60 28,60" fill="rgba(212,175,55,0.7)"/>
-      <!-- Minaret right -->
-      <rect x="438" y="100" width="22" height="460" fill="rgba(16,46,32,0.9)" stroke="rgba(212,175,55,0.3)" stroke-width="1"/>
-      <ellipse cx="449" cy="100" rx="14" ry="28" fill="rgba(16,46,32,0.9)" stroke="rgba(212,175,55,0.35)" stroke-width="1"/>
-      <line x1="449" y1="72" x2="449" y2="55" stroke="rgba(212,175,55,0.6)" stroke-width="1.5"/>
-      <polygon points="449,48 452,60 446,60" fill="rgba(212,175,55,0.7)"/>
-      <!-- Golden dome top -->
-      <ellipse cx="240" cy="78" rx="48" ry="18" fill="rgba(212,175,55,0.15)" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
-      <path d="M192 78 Q192 40 240 30 Q288 40 288 78Z" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.5)" stroke-width="1.5"/>
-      <!-- Crescent on dome -->
-      <path d="M248 34 A10 10 0 1 1 240 24 A7 7 0 0 0 248 34Z" fill="rgba(212,175,55,0.9)"/>
-      <!-- Star next to crescent -->
-      <polygon points="254,27 255.5,31 260,31 256.5,33.5 258,38 254,35 250,38 251.5,33.5 248,31 252.5,31" fill="rgba(212,175,55,0.8)" transform="scale(0.6) translate(180,12)"/>
-      <!-- Courtyard fountain -->
-      <ellipse cx="240" cy="490" rx="50" ry="16" fill="none" stroke="rgba(212,175,55,0.3)" stroke-width="1.5"/>
-      <rect x="237" y="450" width="6" height="40" fill="rgba(212,175,55,0.25)"/>
-      <ellipse cx="240" cy="450" rx="12" ry="5" fill="none" stroke="rgba(212,175,55,0.35)" stroke-width="1"/>
-      <!-- Water shimmer lines -->
-      <path d="M215 475 Q225 468 235 475 Q245 482 255 475 Q265 468 275 475" fill="none" stroke="rgba(145,210,255,0.25)" stroke-width="1"/>
-    </svg>
-  </div>
-  <!-- Stars in travel scene -->
-  <div id="travel-stars-wrap"></div>
-  <div id="travel-mist"></div>
 </div>
 
 <!-- ══════════ HERO ══════════ -->
@@ -2226,17 +1857,14 @@ function openEnvelope(){
     spawnFlowers(cx, cy);
   }, 900);
 
-  // Step 4: Fade out envelope, show doors with ribbon
+  // Step 4: Door panels slide open
   setTimeout(()=>{
     doorL.style.display = 'block';
     doorR.style.display = 'block';
 
+    // Position doors on top of the fading overlay
     gsap.set('#door-left', { xPercent: 0 });
     gsap.set('#door-right', { xPercent: 0 });
-
-    // Show the bow knot
-    const bow = document.getElementById('ribbon-bow');
-    bow.style.display = 'flex';
 
     // Hide envelope overlay
     gsap.to(overlay, {
@@ -2245,208 +1873,23 @@ function openEnvelope(){
       onComplete: ()=>{ overlay.style.display='none'; }
     });
 
-    // ─── RIBBON UNTIES ───
-    // After 0.8s the bow begins to unravel
-    setTimeout(()=>{
-      // Animate bow loops spreading apart and fading
-      gsap.to('.bow-loop-left',  { x: -80, y: -60, rotation: -45, opacity: 0, duration: 0.9, ease: 'back.in(1.5)' });
-      gsap.to('.bow-loop-right', { x:  80, y: -60, rotation:  45, opacity: 0, duration: 0.9, ease: 'back.in(1.5)', delay: 0.05 });
-      gsap.to('.bow-tail-left',  { x: -50, y: 80, rotation: -20, opacity: 0, duration: 0.9, ease: 'power2.in', delay: 0.1 });
-      gsap.to('.bow-tail-right', { x:  50, y: 80, rotation:  20, opacity: 0, duration: 0.9, ease: 'power2.in', delay: 0.1 });
-      gsap.to('.bow-knot',       { scale: 1.6, opacity: 0, duration: 0.5, delay: 0.3, ease: 'power2.out' });
-
-      // Ribbon horizontal strips slide away
-      gsap.to('#ribbon-h-left',  { x: '-100%', duration: 0.7, delay: 0.4, ease: 'power2.in' });
-      gsap.to('#ribbon-h-right', { x:  '100%', duration: 0.7, delay: 0.4, ease: 'power2.in' });
-      gsap.to('#ribbon-v-left',  { y: '-100%', duration: 0.7, delay: 0.5, ease: 'power2.in' });
-      gsap.to('#ribbon-v-right', { y:  '100%', duration: 0.7, delay: 0.5, ease: 'power2.in' });
-
-      setTimeout(()=>{
-        bow.style.display = 'none';
-      }, 1100);
-
-      // ─── DOORS GLOW at edges ───
-      setTimeout(()=>{
-        gsap.to('.door-light-edge', { opacity: 1, duration: 0.4, ease: 'power1.out' });
-      }, 700);
-
-      // ─── GOLDEN BURST ───
-      setTimeout(()=>{
-        const gb = document.getElementById('golden-burst');
-        const core = document.getElementById('golden-burst-core');
-        gb.classList.add('active');
-
-        // Rays
-        for(let i = 0; i < 24; i++){
-          const ray = document.createElement('div');
-          ray.className = 'burst-ray';
-          const angle = (i / 24) * 360;
-          const len = Math.random() * 200 + 150;
-          ray.style.cssText = `
-            width:0;height:3px;left:50%;top:50%;
-            transform:rotate(${angle}deg);
-            transform-origin:left center;
-            position:absolute;
-            border-radius:2px;
-            background:linear-gradient(90deg,rgba(255,253,231,0.95),transparent);
-          `;
-          gb.appendChild(ray);
-          gsap.to(ray, { width: len, duration: 0.5, delay: 0.1, ease: 'power2.out' });
-          gsap.to(ray, { opacity: 0, duration: 0.5, delay: 0.5, ease: 'power2.in' });
+    // Animate doors opening outward
+    gsap.fromTo('#door-left',
+      { xPercent: 0, opacity: 1 },
+      { xPercent: -100, duration: 1.4, ease: 'power3.inOut', delay: 0.1 }
+    );
+    gsap.fromTo('#door-right',
+      { xPercent: 0, opacity: 1 },
+      { xPercent: 100, duration: 1.4, ease: 'power3.inOut', delay: 0.1,
+        onComplete: ()=>{
+          doorL.style.display='none';
+          doorR.style.display='none';
+          // Finally init the main page
+          initAnimations();
         }
-
-        // Core expands
-        gsap.fromTo(core,
-          { width: 0, height: 0 },
-          { width: '160px', height: '160px', duration: 0.45, ease: 'expo.out' }
-        );
-        gsap.to(core, { opacity: 0, duration: 0.6, delay: 0.5, ease: 'power2.in',
-          onComplete: ()=>{ gb.classList.remove('active'); gb.innerHTML='<div id="golden-burst-core"></div>'; }
-        });
-      }, 800);
-
-      // ─── SPARKLING PARTICLES ───
-      setTimeout(()=>{
-        spawnSparkles();
-      }, 800);
-
-      // ─── DOORS OPEN SLOWLY WITH GOLDEN LIGHT ───
-      setTimeout(()=>{
-        gsap.fromTo('#door-left',
-          { xPercent: 0, opacity: 1 },
-          { xPercent: -100, duration: 1.8, ease: 'power3.inOut' }
-        );
-        gsap.fromTo('#door-right',
-          { xPercent: 0, opacity: 1 },
-          { xPercent: 100, duration: 1.8, ease: 'power3.inOut', delay: 0.05,
-            onComplete: ()=>{
-              doorL.style.display='none';
-              doorR.style.display='none';
-              // ─── CAMERA TRAVELS INTO MOSQUE ───
-              travelToMosque();
-            }
-          }
-        );
-      }, 1200);
-
-    }, 800);
-
-  }, 1600);
-}
-
-/* ─── SPAWN SPARKLES ─── */
-function spawnSparkles(){
-  const layer = document.getElementById('sparkle-layer');
-  layer.classList.add('active');
-  const count = window.innerWidth < 600 ? 60 : 120;
-  for(let i = 0; i < count; i++){
-    const sp = document.createElement('div');
-    sp.className = 'sparkle-particle';
-    const size = Math.random() * 6 + 2;
-    const x = Math.random() * window.innerWidth;
-    const y = Math.random() * window.innerHeight;
-    const color = ['#fffde7','#ffe082','#f5c842','#d4af37','#ffffff','#FFF0A0'][Math.floor(Math.random()*6)];
-    sp.style.cssText = `
-      left:${x}px;top:${y}px;
-      width:${size}px;height:${size}px;
-      background:${color};
-      box-shadow:0 0 ${size*2}px ${color};
-      opacity:0;
-    `;
-    layer.appendChild(sp);
-    gsap.to(sp, {
-      opacity: Math.random() * 0.9 + 0.3,
-      scale: Math.random() * 2 + 0.5,
-      duration: Math.random() * 0.4 + 0.2,
-      delay: Math.random() * 1.5,
-      yoyo: true, repeat: 1,
-      ease: 'sine.inOut',
-      onComplete: ()=>{ sp.remove(); }
-    });
-  }
-  setTimeout(()=>{
-    layer.classList.remove('active');
-    layer.innerHTML = '';
-  }, 3500);
-}
-
-/* ─── TRAVEL TO MOSQUE COURTYARD ─── */
-function travelToMosque(){
-  const scene = document.getElementById('mosque-travel');
-  scene.classList.add('active');
-
-  // Generate stars in travel scene
-  const starsWrap = document.getElementById('travel-stars-wrap');
-  for(let i = 0; i < 120; i++){
-    const s = document.createElement('div');
-    s.className = 'travel-star';
-    const sz = Math.random() * 2 + 0.5;
-    s.style.cssText = `
-      left:${Math.random()*100}%;
-      top:${Math.random()*55}%;
-      width:${sz}px;height:${sz}px;
-      animation-delay:${Math.random()*3}s;
-      animation-duration:${Math.random()*2+1.5}s;
-    `;
-    starsWrap.appendChild(s);
-  }
-
-  // Fade in mosque scene
-  gsap.fromTo(scene, { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power2.out' });
-
-  // Camera zoom — scale the arch up (simulate flying through)
-  const arch = scene.querySelector('.travel-arch');
-  const moon = scene.querySelector('.travel-moon');
-
-  gsap.fromTo(arch,
-    { scale: 0.4, opacity: 0.2, y: 120 },
-    { scale: 1, opacity: 1, y: 0, duration: 2.2, ease: 'power3.out', delay: 0.3 }
-  );
-  gsap.fromTo(moon,
-    { scale: 0.5, opacity: 0 },
-    { scale: 1, opacity: 1, duration: 1.8, ease: 'power2.out', delay: 0.5 }
-  );
-
-  // Fountain appears
-  const fountain = scene.querySelector('.travel-fountain');
-  if(fountain){
-    gsap.to(fountain, { opacity: 1, duration: 1, delay: 1.8 });
-  }
-
-  // More sparkles during travel
-  setTimeout(()=>{ spawnSparkles(); }, 600);
-
-  // Continue zooming (fly through arch)
-  setTimeout(()=>{
-    gsap.to(arch, {
-      scale: 3.5, opacity: 0, y: -200,
-      duration: 2, ease: 'power2.in',
-      delay: 0.6
-    });
-    gsap.to(moon, {
-      scale: 0.6, y: -80, opacity: 0,
-      duration: 1.5, ease: 'power2.in', delay: 1
-    });
-    // White flash at the end of journey
-    gsap.to(scene, {
-      backgroundColor: '#fffde7',
-      duration: 0.5,
-      delay: 2.2,
-      ease: 'power2.in',
-      onComplete: ()=>{
-        gsap.to(scene, {
-          opacity: 0, duration: 0.8, ease: 'power2.out',
-          onComplete: ()=>{
-            scene.classList.remove('active');
-            scene.style.display = 'none';
-            starsWrap.innerHTML = '';
-            // Finally reveal main content
-            initAnimations();
-          }
-        });
       }
-    });
-  }, 2200);
+    );
+  }, 1600);
 }
 
 // Tap/click to open envelope
