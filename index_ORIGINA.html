@@ -46,17 +46,6 @@
 html { scroll-behavior: smooth; overflow-x: hidden; }
 
 /* ═══════════════════════════════════════
-   SCROLL LOCK — page cannot be scrolled
-   until the envelope is fully opened
-═══════════════════════════════════════ */
-html.scroll-locked, body.scroll-locked {
-  overflow: hidden !important;
-  height: 100%;
-  touch-action: none;
-  overscroll-behavior: none;
-}
-
-/* ═══════════════════════════════════════
    ISLAMIC GEOMETRIC PATTERN BACKGROUND
 ═══════════════════════════════════════ */
 body {
@@ -80,17 +69,6 @@ body::before {
     radial-gradient(ellipse 100% 100% at 50% 50%, rgba(11,26,20,0.2) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
-}
-
-/* Cinematic edge vignette for a premium, framed feel */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(3,10,7,0.55) 100%);
-  pointer-events: none;
-  z-index: 5000;
-  mix-blend-mode: multiply;
 }
 
 /* ═══════════════════════════════════════
@@ -985,19 +963,10 @@ section {
 .section-heading {
   font-family: var(--font-arabic);
   font-size: clamp(1.6rem,4vw,2.8rem);
+  color: var(--gold-pale);
   text-align: center;
   text-shadow: 0 0 30px rgba(212,175,55,0.3);
   margin-bottom: 0.5rem;
-  background: linear-gradient(100deg, var(--gold-dark) 0%, var(--gold-pale) 20%, #FFFDF2 32%, var(--gold-pale) 44%, var(--gold-dark) 65%, var(--gold-pale) 100%);
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: goldShimmer 7s linear infinite;
-}
-@keyframes goldShimmer {
-  0% { background-position: 0% 0; }
-  100% { background-position: -250% 0; }
 }
 .section-heading-en {
   font-family: var(--font-serif);
@@ -1159,48 +1128,6 @@ section {
   align-self: flex-start;
   margin-top: 12px;
 }
-
-/* ═══════════════════════════════════════
-   ✨ ADD TO CALENDAR BUTTON (NEW FEATURE)
-═══════════════════════════════════════ */
-.add-to-cal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  margin: 0 auto 4rem;
-  padding: 0.9rem 2.2rem;
-  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(26,74,58,0.18) 100%);
-  border: 1px solid rgba(212,175,55,0.45);
-  border-radius: 2px;
-  color: var(--gold-pale);
-  font-family: var(--font-display);
-  font-size: clamp(0.6rem, 1.4vw, 0.72rem);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: box-shadow 0.4s ease, transform 0.3s ease, border-color 0.4s ease;
-  box-shadow: 0 0 0 rgba(212,175,55,0);
-}
-.add-to-cal::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, transparent 20%, rgba(255,240,160,0.35) 50%, transparent 80%);
-  transform: translateX(-140%);
-  transition: transform 0.9s ease;
-}
-.add-to-cal:hover {
-  border-color: rgba(212,175,55,0.9);
-  box-shadow: 0 0 24px rgba(212,175,55,0.35), inset 0 0 20px rgba(212,175,55,0.08);
-  transform: translateY(-2px);
-}
-.add-to-cal:hover::before { transform: translateX(140%); }
-.add-to-cal:active { transform: translateY(0) scale(0.98); }
-.atc-icon { color: var(--gold-light); font-size: 0.9em; }
-.add-to-cal.copied { border-color: var(--emerald-light); color: var(--ivory); }
 
 /* ═══════════════════════════════════════
    ✨ SCRATCH DATE (NEW FEATURE)
@@ -1636,7 +1563,7 @@ footer {
 }
 </style>
 </head>
-<body class="scroll-locked">
+<body>
 
 <!-- CURSOR -->
 <div id="cursor"></div>
@@ -1953,12 +1880,6 @@ footer {
     </div>
   </div>
 
-  <!-- ✨ ADD TO CALENDAR (NEW) -->
-  <button class="add-to-cal reveal" id="add-to-cal-btn" type="button">
-    <span class="atc-icon">✦</span>
-    <span>Add to Calendar</span>
-  </button>
-
   <!-- Timeline -->
   <div class="timeline">
     <div class="timeline-item reveal">
@@ -2184,52 +2105,6 @@ function updateCountdown(){
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-/* ═══════════════════════════════════════
-   ✨ ADD TO CALENDAR (NEW FEATURE)
-   Generates a real .ics file for the Nikah
-═══════════════════════════════════════ */
-(function initAddToCalendar(){
-  const btn = document.getElementById('add-to-cal-btn');
-  if(!btn) return;
-  btn.addEventListener('click', ()=>{
-    const pad = n => String(n).padStart(2,'0');
-    const toICSDate = d => `${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
-    const start = new Date('2026-10-29T21:00:00');
-    const end   = new Date('2026-10-29T23:30:00');
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Masum & Simmi Wedding//EN',
-      'BEGIN:VEVENT',
-      `UID:${Date.now()}@masum-wedding`,
-      `DTSTAMP:${toICSDate(new Date())}`,
-      `DTSTART:${toICSDate(start)}`,
-      `DTEND:${toICSDate(end)}`,
-      'SUMMARY:Nikah — Masum Raza & Simmi Khatoon',
-      'DESCRIPTION:Join us for the Nikah ceremony. With love\\, the families.',
-      'LOCATION:Firojpur, Saran, Bihar',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Masum-Simmi-Wedding.ics';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    btn.classList.add('copied');
-    const label = btn.querySelector('span:last-child');
-    const original = label.textContent;
-    label.textContent = 'Saved to Calendar ✓';
-    setTimeout(()=>{ label.textContent = original; btn.classList.remove('copied'); }, 2200);
-  });
-})();
 
 /* ═══════════════════════════════════════
    ✨ ENVELOPE ANIMATION (NEW)
@@ -2602,10 +2477,6 @@ window.addEventListener('load', ()=>{
 
 /* ─── HERO ANIMATIONS ─── */
 function initAnimations(){
-  // Unlock scrolling now that the invitation is fully revealed
-  document.documentElement.classList.remove('scroll-locked');
-  document.body.classList.remove('scroll-locked');
-
   const tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
 
   tl.to('.bismillah',     { opacity:1, y:0, duration:1.2, from:{ y:30 } })
